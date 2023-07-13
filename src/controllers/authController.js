@@ -21,3 +21,35 @@ export async function signin(req, res) {
         return res.status(500).send(err.message)
     }
 }
+
+export async function signup(req, res){
+    try{
+        const {nome, email, senha, foto, telefone} = req.body;
+        const verification = await db.collection("usuarios").findOne({email})
+        if(verification) return res.status(422).send("Esse email já está cadastrado.")
+        const passwordHash = bcrypt.hashSync(senha, 10);
+        const obj = {nome, email, senha:passwordHash, foto, telefone};
+        await db.collection("usuarios").insertOne(obj);
+        res.status(201).send(`email ${email} cadastrado com sucesso!`);
+    }catch{
+        return res.status(500).send(err.message)
+    }
+}
+
+export async function getUsers(req, res){
+    try{
+        const lista = await db.collection("usuarios").find().toArray()
+        return res.send(lista).status(200);
+    }catch{
+        return res.status(500).send(err.message)
+    }
+}
+
+
+export async function ping(req, res){
+    try{
+        return res.send("Servidor online!");
+    }catch{
+        return res.status(500).send(err.message)
+    }
+}
