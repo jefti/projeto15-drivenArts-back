@@ -12,3 +12,12 @@ export async function cadatraProduto(req,res){
         return res.status(500).send(err.message);
     }
 }
+
+export async function retornaTodosProdutos(req, res){
+    try{
+        const lista = await db.collection("produtos").find({}).toArray();
+        res.send(lista);
+    }catch(err){
+        return res.status(500).send(err.message);
+    }
+}
