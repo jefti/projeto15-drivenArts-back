@@ -21,3 +21,16 @@ export async function retornaTodosProdutos(req, res){
         return res.status(500).send(err.message);
     }
 }
+
+export async function retornaCategoriaProdutos(req, res){
+    try{
+        const categoria = req.params.categoria;
+        const lstCategorias = ['quadro', 'ilustracao','escultura'];
+        if(!lstCategorias.includes(categoria)) return res.status(404).send('categoria não encontrada.');
+        const lista = await db.collection("produtos").find({categoria}).toArray();
+        return res.send(lista);
+        
+        }catch(err){
+            return res.status(500).send(err.message);
+    }
+}
