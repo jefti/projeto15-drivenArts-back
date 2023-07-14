@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { productSchemaValidation } from "../middlewares/productSchemaValidationMiddleware";
+import { productSchemaValidation } from "../middlewares/productSchemaValidationMiddleware.js";
+import { cadatraProduto } from "../controllers/productController.js";
 
-const productRoute = Router();
+const productRouter = Router();
 
-productRoute.post("/produto",productSchemaValidation)
+productRouter.post("/produto",productSchemaValidation,cadatraProduto)
 
-export default productRoute
+export default productRouter

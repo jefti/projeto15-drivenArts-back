@@ -1,4 +1,4 @@
-import { produtoSchema } from "../schemas/produtoSchema"
+import { produtoSchema } from "../schemas/produtoSchema.js"
 
 export function productSchemaValidation (req, res, next){
     const validation = produtoSchema.validate(req.body, {abortEarly: false})
