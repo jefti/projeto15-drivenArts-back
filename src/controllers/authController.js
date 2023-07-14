@@ -9,7 +9,7 @@ export async function signin(req, res) {
         const usuario = await db.collection("usuarios").findOne({ email })
         if (!usuario) return res.status(404).send("Esse email não existe.")
         
-        const senhaCorreta = !bcrypt.compareSync(usuario.senha, senha)
+        const senhaCorreta = bcrypt.compareSync(senha, usuario.senha)
         if (!senhaCorreta) return res.status(401).send("Senha incorreta")
 
         const token = uuid()
