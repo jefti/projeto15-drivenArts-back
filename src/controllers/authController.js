@@ -53,3 +53,23 @@ export async function ping(req, res){
         return res.status(500).send(err.message)
     }
 }
+
+export async function signOut(req, res){
+    try{
+        const sessao = res.locals.id_usuario;
+        await db.collection("sessoes").deleteOne({token: sessao.token})
+		return res.send("Sessão encerrada com sucesso!").status(204);
+    }catch{
+        return res.status(500).send(err.message) 
+    }
+
+}
+
+export async function sessoes(req,res){
+    try{
+        const sessoes = await db.collection("sessoes").find().toArray();
+        return res.send(sessoes).status(200);
+    }catch{
+        return res.status(500).send(err.message)
+    }
+}
